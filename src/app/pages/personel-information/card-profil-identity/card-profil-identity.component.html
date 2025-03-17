@@ -1,0 +1,344 @@
+<div class="flex-auto" *ngIf="user$ | async as user">
+    <div class="mb-4 mt-2 card" *ngIf="showData">
+      <div class="flex items-start justify-between border-b">
+        <div class="px-6 py-4">
+          <h2 class="title m-0">Identité du profil</h2>
+        </div>
+        <div class="flex items-center justify-end gap-1">
+          <button (click)="getRouterLink()" color="primary" mat-icon-button type="button">
+            <mat-icon svgIcon="mat:edit"></mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="py-3 flex items-center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <mat-icon class="icon-sm" svgIcon="mat:account_circle"></mat-icon>
+          </div>
+          <div @fadeInRight>
+            <p class="m-0 body-1">{{user.first_name + " " +user.last_name}}</p>
+            <p class="m-0 caption text-hint">Prénom & Nom</p>
+          </div>
+        </div>
+        <div class="py-3 flex items-center">
+            <div @scaleIn
+              class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon class="icon-sm" svgIcon="mat:location_on"></mat-icon>
+            </div>
+            <div @fadeInRight>
+                <p class="m-0 body-1">{{user.address}}</p>
+                <p class="m-0 caption text-hint">Adresse</p>
+              </div>
+          </div>  
+        <div class="py-3 flex items-center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <mat-icon class="icon-sm" svgIcon="mat:date_range"></mat-icon>
+          </div>
+  
+          <div @fadeInRight>
+            <p class="m-0 body-1">
+              03/12/1999
+            </p>
+            <p class="m-0 caption text-hint">Date de naissance</p>
+          </div>
+        </div>
+  
+        <div class="py-3 flex items-center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <mat-icon class="icon-sm" svgIcon="mat:location_on"></mat-icon>
+          </div>
+  
+          <div @fadeInRight>
+            <p class="m-0 body-1">
+                Dakar
+            </p>
+            <p class="m-0 caption text-hint">Lieu de naissance</p>
+          </div>
+        </div>
+  
+        <div class="py-3 flex items-center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <mat-icon class="icon-sm" svgIcon="mat:flag"></mat-icon>
+          </div>
+  
+          <div @fadeInRight>
+            <p class="m-0 body-1">
+                Senegalaise
+            </p>
+            <p class="m-0 caption text-hint">Nationalité</p>
+          </div>
+        </div>
+  
+        <div class="py-3 flex items-center">
+          <div @fadeInRight>
+            <ng-container >
+              <img [src]="user.profile_photo_path" class="avatar w-32 h-32 mx-auto" matRipple />
+            </ng-container>
+            <!-- <ng-template #defaultImage>
+              <mat-icon svgIcon="mat:person" class="icon-sm text-primary-600 "></mat-icon>
+            </ng-template> -->
+            <!-- <p class="m-0 caption text-hint">Photo de profil</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Formulaire de modification -->
+     <div class="card mb-4 mt-2 p-6" *ngIf="showForm">
+      <div class="flex items-start justify-between border-b">
+        <div class="px-6 py-4">
+          <h2 class="title m-0">Modifier les informations personnelles</h2>
+        </div>
+        <div class="flex items-center justify-end gap-1">
+          <button (click)="getRouterLink()" class="ltr:ml-4 rtl:mr-4 flex-none hidden sm:inline-block" color="primary"
+            mat-flat-button type="button">
+            <mat-icon class="ltr:mr-2 font-bold rtl:ml-2 ltr:-ml-1 rtl:-mr-1 icon-sm" svgIcon="mat:arrow_back"></mat-icon>
+            <span>Retour</span>
+          </button>
+        </div>
+      </div>
+      <div class="container">
+        <form [formGroup]="form">
+          <div class="mt-4 flex flex-col gap-2">
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <mat-form-field class="flex-auto">
+                <mat-label>Prénom</mat-label>
+                <input formControlName="first_name" matInput required />
+                <mat-error >Ce champ est requis.</mat-error>
+              </mat-form-field>
+              <mat-form-field class="flex-auto">
+                <mat-label>Nom de famille</mat-label>
+                <input formControlName="last_name" matInput required />
+                <mat-error >Ce champ est requis.</mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <!-- <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.list.form.nationality.label"></mat-label>
+                <input formControlName="nationality" matInput required />
+                <mat-error >Ce champ est requis.</mat-error>
+              </mat-form-field> -->
+              <!-- <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.list.form.date_of_birth.label"></mat-label>
+                <input formControlName="date_of_birth" [matDatepicker]="datepickerRef" matInput
+                  placeholder="Enter or select your birthdate&hellip;" />
+                <mat-datepicker-toggle [for]="datepickerRef" matIconSuffix></mat-datepicker-toggle>
+                <mat-datepicker #datepickerRef></mat-datepicker>
+                <mat-error hcsTranslate="work-experience.add.form.date_of_birth.required">This field is
+                  required.</mat-error>
+              </mat-form-field> -->
+            </div>
+  
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <!-- <mat-form-field class="flex-auto">
+                <mat-label>ttttt</mat-label>
+                <mat-select formControlName="language" [(value)]="selectedLanguage">
+                  <mat-option *ngFor="let language of languages" [value]="language.id">
+                    {{ language.name }}
+                  </mat-option>
+                </mat-select> 
+              </mat-form-field> -->
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <div
+                class="flex flex-col items-center justify-center mb-3 border-2 border-dashed border-gray-300 rounded-md p-6 w-full">
+  
+                <div class="mt-4 mb-6 overflow-hidden">
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-bold text-blue-600">
+                      {{ formatFileSize(getTotalFileSize()) }} / {{ formatFileSize(maxTotalSize) }}
+                    </span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-blue-600 h-2.5 rounded-full"
+                      [style.width]="(getTotalFileSize() / maxTotalSize * 100) + '%'"></div>
+                  </div>
+                </div>
+                <img *ngIf="imageUrl" [src]="imageUrl"
+                  alt="Profil Image" class="w-full rounded-md m-3" style="max-width: 200px; max-height: 200px" />
+                <label
+                  class="my-3 bg-gray-300 text-center text-sm font-medium text-gray-700 cursor-pointer border-2 border-dashed border-gray-300 rounded-md p-3 flex items-center">
+                  <mat-icon matPrefix svgIcon="mat:open_in_browser"></mat-icon>
+                  <span class="fa fa-upload" hcsTranslate="personnal-information.list.form.profil_image.label"></span>
+                  <input (change)="onFileSelected($event)" type="file" class="sr-only"  [multiple]="false" />
+                </label>
+              </div>
+            </div>
+          </div>
+  
+          <div class="actions flex items-center justify-end gap-2">
+            <!-- <button *ngIf="!disabledBtn" (click)="submit()"
+              [disabled]="personnalInformationProfilIdentityFormGroup.invalid" color="primary" mat-raised-button>
+              <span hcsTranslate="global.validate">VALIDATE</span>
+            </button> -->
+          </div>
+        </form>
+      </div>
+    </div> 
+</div>
+
+<div class="flex-auto" *ngIf="user$ | async as user">
+    <div class="mb-4 mt-2 card" >
+      <div class="flex items-start justify-between border-b">
+        <div class="px-6 py-4">
+          <h2 class="title m-0">Contacts</h2>
+        </div>
+        <div class="flex items-center justify-end gap-1">
+          <button  color="primary" mat-icon-button type="button">
+            <mat-icon svgIcon="mat:edit"></mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="py-3 flex items-center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <mat-icon class="icon-sm" svgIcon="mat:email"></mat-icon>
+          </div>
+          <div @fadeInRight>
+            <p class="m-0 body-1">
+                {{user.email}}
+            </p>
+            <p class="m-0 caption text-hint">Adress email</p>
+          </div>
+        </div>
+        <div class="py-3 flex items-center">
+            <div @scaleIn
+              class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon class="icon-sm" svgIcon="mat:phone"></mat-icon>
+            </div>
+            <div @fadeInRight>
+                <p class="m-0 body-1">
+                    {{user.phone_number_one}}
+                </p>
+                <p class="m-0 caption text-hint">Numéro de téléphone</p>
+              </div>
+          </div>  
+        <div class="py-3 flex items-center">
+          <div @scaleIn
+            class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+            <mat-icon class="icon-sm" svgIcon="mat:phone"></mat-icon>
+          </div>
+  
+          <div @fadeInRight>
+            <p class="m-0 body-1">780982765</p>
+            <p class="m-0 caption text-hint">Numéro de téléphone alternatif</p>
+          </div>
+        </div>
+        <div class="py-3 flex items-center">
+            <div @scaleIn
+              class="w-10 h-10 rounded-full bg-primary-600/10 text-primary-600 ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon class="icon-sm" svgIcon="mat:date_range"></mat-icon>
+            </div>
+    
+            <div @fadeInRight>
+              <p class="m-0 body-1">
+                03/12/1999
+              </p>
+              <p class="m-0 caption text-hint">Date de naissance</p>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+  
+    <!-- Formulaire de modification -->
+    <!-- <div class="card mb-4 mt-2 p-6" *ngIf="isActif">
+      <div class="flex items-start justify-between border-b">
+        <div class="px-6 py-4">
+          <h2 class="title m-0" hcsTranslate="personnal-information.update.form.profil_identity.label"></h2>
+        </div>
+        <div class="flex items-center justify-end gap-1">
+          <button (click)="getRouterLink()" class="ltr:ml-4 rtl:mr-4 flex-none hidden sm:inline-block" color="primary"
+            mat-flat-button type="button">
+            <mat-icon class="ltr:mr-2 font-bold rtl:ml-2 ltr:-ml-1 rtl:-mr-1 icon-sm" svgIcon="mat:arrow_back"></mat-icon>
+            <span hcsTranslate="personnal-information.back">Go Back</span>
+          </button>
+        </div>
+      </div>
+      <div class="container">
+        <form [formGroup]="personnalInformationProfilIdentityFormGroup">
+          <div class="mt-4 flex flex-col gap-2">
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.list.form.first_name.label"></mat-label>
+                <input formControlName="first_name" matInput required />
+                <mat-error >Ce champ est requis.</mat-error>
+              </mat-form-field>
+              <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.list.form.last_name.label"></mat-label>
+                <input formControlName="last_name" matInput required />
+                <mat-error >Ce champ est requis.</mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.list.form.nationality.label"></mat-label>
+                <input formControlName="nationality" matInput required />
+                <mat-error >Ce champ est requis.</mat-error>
+              </mat-form-field>
+              <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.list.form.date_of_birth.label"></mat-label>
+                <input formControlName="date_of_birth" [matDatepicker]="datepickerRef" matInput
+                  placeholder="Enter or select your birthdate&hellip;" />
+                <mat-datepicker-toggle [for]="datepickerRef" matIconSuffix></mat-datepicker-toggle>
+                <mat-datepicker #datepickerRef></mat-datepicker>
+                <mat-error hcsTranslate="work-experience.add.form.date_of_birth.required">This field is
+                  required.</mat-error>
+              </mat-form-field>
+            </div>
+  
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <mat-form-field class="flex-auto">
+                <mat-label hcsTranslate="personnal-information.update.form.langue.label"></mat-label>
+                <mat-select formControlName="language" [(value)]="selectedLanguage">
+                  <mat-option *ngFor="let language of languages" [value]="language.id">
+                    {{ language.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <div
+                class="flex flex-col items-center justify-center mb-3 border-2 border-dashed border-gray-300 rounded-md p-6 w-full">
+  
+                <div class="mt-4 mb-6 overflow-hidden">
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-bold text-blue-600">
+                      {{ formatFileSize(getTotalFileSize()) }} / {{ formatFileSize(maxTotalSize) }}
+                    </span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-blue-600 h-2.5 rounded-full"
+                      [style.width]="(getTotalFileSize() / maxTotalSize * 100) + '%'"></div>
+                  </div>
+                </div>
+                <img *ngIf="profilIdentity.user.profile_image" [src]="profilIdentity.user.profile_image"
+                  alt="Profil Image" class="w-full rounded-md m-3" style="max-width: 300px; max-height: 300px" />
+                <label
+                  class="my-3 bg-gray-300 text-center text-sm font-medium text-gray-700 cursor-pointer border-2 border-dashed border-gray-300 rounded-md p-3 flex items-center">
+                  <mat-icon matPrefix svgIcon="mat:open_in_browser"></mat-icon>
+                  <span class="fa fa-upload" hcsTranslate="personnal-information.list.form.profil_image.label"></span>
+                  <input (change)="handleImageInputChange($event)" type="file" class="sr-only" accept="image/*" />
+                </label>
+              </div>
+            </div>
+          </div>
+  
+          <div class="actions flex items-center justify-end gap-2">
+            <button *ngIf="!disabledBtn" (click)="submit()"
+              [disabled]="personnalInformationProfilIdentityFormGroup.invalid" color="primary" mat-raised-button>
+              <span hcsTranslate="global.validate">VALIDATE</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div> -->
+</div>

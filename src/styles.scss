@@ -1,0 +1,69 @@
+@import "~simplebar/dist/simplebar.css";
+@import "~highlight.js/styles/androidstudio.css";
+// Vex Core
+@import "./@vex/styles/core";
+
+/*
+  You can override any CSS Variable or style here
+  Example:
+
+  :root {
+   --vex-sidenav-background: #333333;
+  }
+
+  All possible variables can be found in @vex/styles/core or by simply inspecting the element you want to change
+  in Chrome/Firefox DevTools
+*/
+
+/**
+  Uncomment the below code and adjust the values to fit your colors, the application will automatically adjust
+ */
+html {
+  
+  // --vex-color-primary: blue;
+  // --vex-color-primary-contrast: white;
+
+  // --vex-color-accent: yellow;
+  // --vex-color-accent-contrast: black;
+
+  // --vex-color-warn: yellow;
+  // --vex-color-warn-contrast: black;
+
+  // styles.scss
+.mat-mdc-snack-bar-container {
+  &.success {
+    --mdc-snackbar-container-color: #4caf50;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+  
+  &.error {
+    --mdc-snackbar-container-color: #f44336;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+
+  &.warning {
+    --mdc-snackbar-container-color: #ff9800;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+
+  &.info {
+    --mdc-snackbar-container-color: #2196f3;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+}
+
+// Si vous voulez personnaliser davantage :
+.mat-mdc-snack-bar-container {
+  &.custom-snackbar {
+    --mat-snack-bar-button-color: white;
+    button {
+      color: white;
+    }
+  }
+}
+  
+}

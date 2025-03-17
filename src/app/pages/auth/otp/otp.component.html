@@ -1,0 +1,67 @@
+<div class="bg-pattern min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <mat-progress-bar class="overflow-hidden w-full" *ngIf="mainFrameLoading" mode="indeterminate"
+      color="primary"></mat-progress-bar>
+      <div class="p-6 pb-0 flex flex-col items-center justify-center">
+        <div class="fill-current text-center">
+          <img class="w-16" src="assets/img/logo/logo.svg" />
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <h2 class="title m-0">Vérification Code OTP</h2>
+        <h4 class="body-2 text-secondary m-0">
+          Entrez le code de vérification qui a été envoyé à votre adresse email
+        </h4>
+        <p *ngIf="email" class="mt-2">{{ maskEmail() }}</p>
+       </div>
+
+       <div class="flex justify-between gap-2 p-6 m-6">
+        <input *ngFor="let control of otpControls; let i = index"
+          [id]="'otp-' + i"
+          type="text"
+          maxlength="1"
+          [(ngModel)]="otp[i]"
+          (input)="handleChange($event, i)"
+          (keydown)="handleKeyDown($event, i)"
+          class="w-12 h-12 text-center border-2 border-gray-500 rounded-lg text-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+        />
+      </div>
+      <div *ngIf="existErrorMessage" class="error-message text-red-500 font-medium text-xl text-center mb-4">
+        {{ errorMessage }}
+      </div>
+      <button 
+        class="w-full"
+        (click)="verify()" 
+        color="primary" 
+        mat-raised-button 
+        type="button"
+        [disabled]="!isValidOTP()">
+        VÉRIFIER
+      </button>
+      
+      
+  
+      <!-- <div class="flex justify-between gap-2 p-6 m-6">
+        <input *ngFor="let control of otpControls; let i = index"
+          [id]="'otp-' + i"
+          type="text"
+          maxlength="1"
+          (input)="handleChange($event, i)"
+          (keydown)="handleKeyDown($event, i)"
+        class="w-12 h-12 text-center border-2 border-gray-500 rounded-lg text-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+        />
+      </div>
+
+      <button 
+        class="w-full"
+        (click)="verify()" color="primary" 
+        mat-raised-button type="button"
+        [disabled]="!isValidOTP()">
+        VÉRIFIER
+      </button> -->
+
+
+    </div>
+  </div>
+  

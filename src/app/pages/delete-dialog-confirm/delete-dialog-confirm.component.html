@@ -1,0 +1,34 @@
+  <div mat-dialog-title class="flex items-center justify-between">
+    <div>{{data.title}}</div>
+    <button
+      (click)="onCancelClick()"
+      type="button"
+      mat-icon-button
+      tabindex="-1">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <p>
+      {{data.message}}
+    </p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <div class="flex justify-end space-x-4">
+        <button color="warn" mat-raised-button type="reset" (click)="onCancelClick()">
+          <mat-icon
+            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+            svgIcon="mat:cancel"></mat-icon>
+          <span>Annuler</span>
+        </button>
+        <button color="primary" mat-raised-button type="button" 
+        (click)="onConfirmClick()">
+          <mat-icon
+            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+            svgIcon="mat:save"></mat-icon>
+          <span>Confirmer</span>
+        </button>
+      </div>
+</mat-dialog-actions>

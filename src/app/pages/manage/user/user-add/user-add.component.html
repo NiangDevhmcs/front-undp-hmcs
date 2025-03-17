@@ -1,0 +1,186 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+    <div class="flex items-center" mat-dialog-title>
+      <img *ngIf="userSelected.profile_photo_path"
+        [src]="userSelected.profile_photo_path"
+        class="avatar ltr:mr-5 rtl:ml-5" />
+
+        <h2 class="headline m-0 flex-auto" *ngIf="!isEditMode">
+           <!-- <span *ngIf="">
+            {{ form.get('first_name')?.value + " " + form.get('last_name')?.value || 'Ajouter un utilisateur'}}
+           </span> -->
+           <span *ngIf="form.get('first_name')?.value  || form.get('last_name')?.value">
+            {{ form.get('first_name')?.value + " " + form.get('last_name')?.value}}
+           </span>
+           <span *ngIf="!form.get('first_name')?.value  && !form.get('last_name')?.value">
+            Ajouter un utilisateur
+           </span>
+        </h2>
+        <h2 class="headline m-0 flex-auto" *ngIf="isEditMode">
+            {{ form.get('first_name')?.value + " " + form.get('last_name')?.value}}
+         </h2>
+  
+      <button
+      
+        class="text-secondary"
+        mat-icon-button
+        type="button">
+        <mat-icon
+        
+          class="text-amber-600"
+          svgIcon="mat:star"></mat-icon>
+      </button>
+  
+      <button
+        class="text-secondary"
+        mat-dialog-close
+        mat-icon-button
+        type="button">
+        <mat-icon svgIcon="mat:close"></mat-icon>
+      </button>
+    </div>
+  
+    <mat-divider class="text-border"></mat-divider>
+  
+    <mat-dialog-content class="flex flex-col">
+        <div
+        class="p-4 text-center"
+        matRipple>
+        <img [src]="imageUrl" class="avatar h-24 w-24 mx-auto" style="border: 1px solid;"/>
+    
+        <h2 class="title mb-1 mt-3">
+          <label class="block mb-2 text-gray-700 font-semibold">Charger la photo de profile</label>
+          <input type="file" (change)="onFileChange($event)" class="text-sm text-gray-600">
+          <p style="color: red;" *ngIf="isFailedImg">{{messageCtrlImg}}</p>
+        </h2>
+       
+      </div>
+
+      <div class="flex flex-col sm:flex-row">
+        <mat-form-field class="flex-auto">
+          <mat-label>Prénom</mat-label>
+          <input cdkFocusInitial formControlName="first_name" matInput />
+          <mat-icon matIconPrefix svgIcon="mat:person"></mat-icon>
+          <mat-error *ngIf="form.controls['first_name'].errors?.['required']">
+            Le prénom est obligatoire
+        </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="sm:ml-6 flex-auto">
+          <mat-label>Nom</mat-label>
+          <input formControlName="last_name" matInput />
+          <mat-icon matIconPrefix svgIcon="mat:person"></mat-icon>
+          <mat-error *ngIf="form.controls['last_name'].errors?.['required']">
+            Le nom est obligatoire
+        </mat-error>
+        </mat-form-field>
+      </div>
+  
+
+      <div class="flex flex-col sm:flex-row">
+        <mat-form-field class="flex-auto">
+          <mat-label>Adresse Email</mat-label>
+          <input formControlName="email" matInput />
+          <mat-icon matIconPrefix svgIcon="mat:mail"></mat-icon>
+          <mat-error *ngIf="form.controls['email'].errors?.['required']">
+            L'email est obligatoire
+        </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col sm:flex-row">
+        <mat-form-field class="flex-auto">
+          <mat-label>Choisir un rôle</mat-label>
+          <mat-select formControlName="role_id" required>
+            <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{role.name}}
+            </mat-option>
+            <!-- <mat-option value="5">Directeur(trice)</mat-option>
+            <mat-option value="3">Vendeur(se)</mat-option>
+            <mat-option value="2">Trésorier(e)</mat-option> -->
+          </mat-select>
+          <mat-icon matIconPrefix svgIcon="mat:unfold_more"></mat-icon>
+          <mat-error *ngIf="form.controls['role_id'].errors?.['required']">
+            Le rôle est obligatoire
+        </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="sm:ml-6 flex-auto">
+          <mat-label>Adresse</mat-label>
+          <input formControlName="address" matInput />
+          <mat-icon matIconPrefix svgIcon="mat:location_city"></mat-icon>
+          <mat-error *ngIf="form.controls['address'].errors?.['required']">
+            L'adresse est obligatoire
+        </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div class="flex flex-col sm:flex-row">
+  
+        <mat-form-field class="flex-auto">
+          <mat-label>Genre</mat-label>
+          <mat-select formControlName="gender" placeholder="Selectionner le genre&hellip;" required>
+            <mat-option value="male">Homme</mat-option>
+            <mat-option value="female">Femme</mat-option>
+          </mat-select>
+          <mat-icon matIconPrefix svgIcon="mat:unfold_more"></mat-icon>
+          <mat-error *ngIf="form.controls['gender'].errors?.['required']">
+            Le genre est obligatoire
+        </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col sm:flex-row">
+        <mat-form-field class="flex-auto">
+          <mat-label>Téléphone 1</mat-label>
+          <input formControlName="phone_number_one" matInput required/>
+          <mat-icon matIconPrefix svgIcon="mat:phone"></mat-icon>
+          <mat-error *ngIf="form.controls['phone_number_one'].errors?.['required']">
+            Le numéro de tépléphone est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.controls['phone_number_one'].errors?.['pattern']">
+            Le format est invalide
+        </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="sm:ml-6 flex-auto">
+          <mat-label>Téléphone 2</mat-label>
+          <input formControlName="phone_number_two" matInput />
+          <mat-icon matIconPrefix svgIcon="mat:phone"></mat-icon>
+          <mat-error *ngIf="form.controls['phone_number_two'].errors?.['pattern']">
+            Le format est invalide
+        </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+        <div class="flex justify-end space-x-4">
+            <button color="warn" mat-raised-button type="reset" (click)="close()">
+              <mat-icon
+                class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                svgIcon="mat:cancel"></mat-icon>
+              <span>Annuler</span>
+            </button>
+            <button color="primary" mat-raised-button type="button" 
+            *ngIf="!isEditMode"
+            [disabled]="form.invalid" 
+            (click)="save()">
+              <mat-icon
+                class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                svgIcon="mat:save"></mat-icon>
+              <span>Enregistrer</span>
+            </button>
+
+            <button color="primary" mat-raised-button type="button" 
+            *ngIf="isEditMode"
+            [disabled]="form.invalid" 
+            (click)="updateUser()">
+              <mat-icon
+                class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                svgIcon="mat:edit"></mat-icon>
+              <span>Modifier</span>
+            </button>
+          </div>
+    </mat-dialog-actions>
+  </form>

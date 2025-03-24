@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
+  HttpClient,
+  HttpClientModule,
   provideHttpClient,
   withInterceptorsFromDi
 } from '@angular/common/http';
@@ -17,6 +19,8 @@ import { provideNavigation } from './core/navigation/navigation.provider';
 import { vexConfigs } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 import { httpInterceptorProviders } from './interceptors';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,8 +28,17 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
       MatDialogModule,
       MatBottomSheetModule,
-      MatNativeDateModule
+      MatNativeDateModule,
+      // HttpClientModule, // Ajout de HttpClientModule pour la traduction
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      })
     ),
+    // provideHttpClient(),
     provideRouter(
       appRoutes,
       // TODO: Add preloading withPreloading(),
@@ -91,4 +104,9 @@ export const appConfig: ApplicationConfig = {
       }
     })
   ]
+
 };
+// Ajoutez cette fonction factory pour le TranslateLoader
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

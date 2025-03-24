@@ -2,6 +2,9 @@
   <div @fadeInUp class="card overflow-hidden w-full max-w-2xl">
     <mat-progress-bar class="overflow-hidden w-full" *ngIf="mainFrameLoading" mode="indeterminate"
       color="primary"></mat-progress-bar>
+      <div class="justify-end m-6">
+        <vex-language-selector-component></vex-language-selector-component>
+      </div>
     <div class="p-6 pb-0 flex flex-col items-center justify-center">
       <div class="fill-current text-center">
         <img *ngIf="!applicationSetting.logo_url" class="w-16" src="assets/img/logo/logo.svg" />
@@ -14,6 +17,8 @@
       <h4 class="body-2 text-secondary m-0">
         Connectez-vous avec vos identifiants, ci-dessous.
       </h4>
+      <h1>{{ 'welcome' | translate }}</h1>
+
     </div>
     <div [formGroup]="form" class="p-6 flex flex-col gap-4">
       <div class="flex flex-col">
@@ -60,7 +65,7 @@
         {{ errorMessage }}
       </div>
       <div class="flex items-center justify-between">
-        <mat-checkbox class="caption" formArrayName="rememberme" color="primary">Se souvenir de moi</mat-checkbox>
+        <mat-checkbox class="caption" formControlName="remember_me" color="primary">Se souvenir de moi</mat-checkbox>
         <a [routerLink]="['/forgot-password']" class="caption"
         >Mot de passe oublié?</a
         >

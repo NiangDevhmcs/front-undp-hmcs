@@ -20,6 +20,9 @@ import { map, Observable } from 'rxjs';
 import { ResponseAppSetting } from '../../response-type/Type';
 import { ApplicationSetting } from '../../interface/ApplicationSetting';
 import { OtpStateService } from '../service/OtpState.service';
+import { LanguageService } from '../service/Language.service';
+import { LanguageSelectorComponentComponent } from "../../../language-selector-component/language-selector-component.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'vex-login',
@@ -38,8 +41,10 @@ import { OtpStateService } from '../service/OtpState.service';
     MatCheckboxModule,
     RouterLink,
     MatSnackBarModule,
-    MatProgressBarModule
-  ]
+    MatProgressBarModule,
+    LanguageSelectorComponentComponent,
+    TranslateModule
+]
 })
 export class LoginComponent implements OnInit{
   data$: Observable<ResponseAppSetting> = new Observable<ResponseAppSetting>;
@@ -49,7 +54,7 @@ export class LoginComponent implements OnInit{
     email: ['niangdev031299@gmail.com', [Validators.required, Validators.minLength(8), Validators.maxLength(254),
       Validators.email, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     password: ['password', [Validators.required, Validators.minLength(8)]],
-    rememberme: false,
+    remember_me: [false],
   });
 
   inputType = 'password';
@@ -66,8 +71,12 @@ export class LoginComponent implements OnInit{
     private authService:AuthService,
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
-    private otpStateService: OtpStateService
-  ) {}
+    private otpStateService: OtpStateService,
+    private laguageService:LanguageService,
+    private translate: TranslateService
+  ) {
+    this.translate.use(laguageService.getLocale());
+  }
 
   ngOnInit(): void {
     this.getData();
@@ -90,6 +99,7 @@ export class LoginComponent implements OnInit{
       this.mainFrameLoading = true;
       this.disabledBtn = true;
       const credentials = this.form.value;
+
       this.authService.login(credentials).subscribe({
 
         next: (response) => {
@@ -142,7 +152,6 @@ export class LoginComponent implements OnInit{
     });
   }
 
-
   toggleVisibility() {
     if (this.visible) {
       this.inputType = 'password';
@@ -164,4 +173,6 @@ export class LoginComponent implements OnInit{
       }
     );
   }
+
+
 }

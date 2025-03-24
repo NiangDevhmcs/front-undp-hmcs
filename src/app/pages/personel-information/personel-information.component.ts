@@ -22,6 +22,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms } from '@vex/animations/stagger.animation';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { CardProfilIdentityComponent } from './card-profil-identity/card-profil-identity.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'vex-personel-information',
@@ -32,8 +33,6 @@ import { CardProfilIdentityComponent } from './card-profil-identity/card-profil-
   imports: [
     MatButtonToggleModule,
     ReactiveFormsModule,
-    VexPageLayoutContentDirective,
-    NgIf,
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
@@ -43,8 +42,6 @@ import { CardProfilIdentityComponent } from './card-profil-identity/card-profil-
     MatSelectModule,
     MatOptionModule,
     MatCheckboxModule,
-    NgFor,
-    NgClass,
     MatPaginatorModule,
     FormsModule,
     MatDialogModule,
@@ -52,7 +49,8 @@ import { CardProfilIdentityComponent } from './card-profil-identity/card-profil-
     MatSnackBarModule,
     CommonModule,
     MatSlideToggleModule,
-    CardProfilIdentityComponent
+    CardProfilIdentityComponent,
+    TranslateModule
   ],
 })
 export class PersonelInformationComponent {

@@ -1,3 +1,4 @@
+import { LanguageSelectorComponentComponent } from './../../../language-selector-component/language-selector-component.component';
 import {
   Component,
   DestroyRef,
@@ -45,7 +46,8 @@ import { AuthService } from 'src/app/pages/auth/service/auth.service';
     ToolbarNotificationsComponent,
     ToolbarUserComponent,
     NavigationComponent,
-    AsyncPipe
+    AsyncPipe,
+    LanguageSelectorComponentComponent
   ]
 })
 export class ToolbarComponent implements OnInit {

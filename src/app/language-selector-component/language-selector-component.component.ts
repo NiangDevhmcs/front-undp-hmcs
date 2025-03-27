@@ -1,7 +1,6 @@
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LanguageService } from '../pages/auth/service/Language.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,14 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { Language } from '../pages/interface/Language';
 @Component({
   selector: 'vex-language-selector-component',
   templateUrl: './language-selector-component.component.html',
   styleUrls: ['./language-selector-component.component.scss'],
-  // imports:[CommonModule,FormsModule],
   imports: [
-    NgIf,
     NgFor,
     MatButtonModule,
     MatTooltipModule,
@@ -28,25 +25,32 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   standalone:true
 })
-export class LanguageSelectorComponentComponent {
-  languages = [
-    { code: 'fr', name: 'Français' },
-    { code: 'en', name: 'English' },
-    { code: 'pt', name: 'Português' }
-  ];
-
-  selectedLanguage: string = 'en';
-
-  // constructor(private translateService: TranslateService) { }
-
+export class LanguageSelectorComponentComponent implements OnInit {
+  languages: Language[] = [];
+  selectedLanguage: Language | null = null;
   currentLocale: string;
 
   constructor(private languageService: LanguageService) {
     this.currentLocale = this.languageService.getLocale();
   }
 
+  ngOnInit(): void {
+    this.languageService.getAllLanguages().subscribe({
+      next: (response) => {
+        this.languages = response.data;
+        this.selectedLanguage = this.findLanguageByCode(this.currentLocale);
+      }
+    });
+  }
+
+  findLanguageByCode(code: string): Language | null {
+    const found = this.languages.find(lang => lang.code === code);
+    return found || this.findLanguageByCode('en') || null;
+  }
+
   changeLanguage(locale: string): void {
-    this.selectedLanguage = locale;
-    this.languageService.setLocale(this.selectedLanguage);
+    this.currentLocale = locale;
+    this.languageService.setLocale(this.currentLocale);
+    this.selectedLanguage = this.findLanguageByCode(this.currentLocale);
   }
 }

@@ -68,31 +68,6 @@ export class CardProfilIdentityComponent implements OnInit {
 
   form!: UntypedFormGroup;
 
-  // Simulation de la réponse du service
-  // user$: Observable<User> = new Observable<User>(observer => {
-  //   observer.next({
-  //     id: 1,
-  //     first_name: "Ibrahima",
-  //     last_name: "NIANG",
-  //     phone_number_one: "770906538",
-  //     phone_number_two: null,
-  //     email: "niangdev031299@gmail.com",
-  //     email_verified_at: "2025-03-17T09:46:42.000000Z",
-  //     two_factor_confirmed_at: null,
-  //     role_id: 1,
-  //     status: 1,
-  //     address: "Bargny",
-  //     gender: "male",
-  //     current_team_id: null,
-  //     profile_photo_path: null,
-  //     requires_otp: false,
-  //     role: {
-  //       id: 1,
-  //       name: "Sysmanager"
-  //     }
-  //   });
-  // });
-
   userSelected: User | null = null;
 
   constructor(

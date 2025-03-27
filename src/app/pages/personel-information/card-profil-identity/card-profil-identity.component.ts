@@ -35,8 +35,6 @@ import { User } from '../../interface/User';
     MatButtonModule,
     NgIf,
     CommonModule,
-    // MatExpansionModule,
-    // MatExpansionModule,
     MatTooltipModule,
     RouterModule,
     FormsModule,
@@ -45,7 +43,6 @@ import { User } from '../../interface/User';
     MatProgressBarModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    DatePipe,
     MatSelectModule,
     MatCardModule,
     MatRadioModule
